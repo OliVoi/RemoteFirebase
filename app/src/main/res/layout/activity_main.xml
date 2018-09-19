@@ -5,58 +5,60 @@
     android:layout_width="match_parent"
     android:background="#ceecff"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".app.view.MainActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgBack"
         android:layout_width="0dp"
-        android:layout_height="135dp"
+        android:layout_height="0dp"
+        android:src="@drawable/cytyy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/remote"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.20" />
 
     <EditText
-        android:id="@+id/editEmail"
+        android:id="@+id/ediEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
         android:background="@drawable/boder"
-        android:inputType="textPersonName"
+        android:ems="10"
         android:hint="Email..."
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.050000012" />
 
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/editPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
         android:background="@drawable/boder"
-        android:inputType="textPersonName"
-        android:hint="Password..."
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:ems="10"
+        android:hint="PassWord..."
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="@+id/imgBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editEmail"
+        app:layout_constraintTop_toBottomOf="@+id/ediEmail"
         app:layout_constraintVertical_bias="0.100000024" />
 
     <Button
@@ -64,25 +66,22 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:background="@drawable/stylebutton"
+        android:textColor="#0083ae"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintStart_toStartOf="@+id/editPass"
+        app:layout_constraintTop_toBottomOf="@+id/editPass"
+        app:layout_constraintVertical_bias="0.100000024" />
 
     <Button
-        android:id="@+id/btnRegigter"
+        android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/stylebutton"
-        android:text="Regigter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editPassword"
-        app:layout_constraintHorizontal_bias="0.3"
+        android:textColor="#0083ae"
+        android:text="Register"
         app:layout_constraintStart_toEndOf="@+id/btnLogin"
-        app:layout_constraintTop_toTopOf="@+id/btnLogin"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintTop_toTopOf="@+id/btnLogin" />
 </android.support.constraint.ConstraintLayout>
