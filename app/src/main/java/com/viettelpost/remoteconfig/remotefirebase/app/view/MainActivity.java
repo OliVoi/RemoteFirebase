@@ -11,7 +11,7 @@ import com.jackandphantom.blurimage.BlurImage;
 import com.viettelpost.remoteconfig.remotefirebase.R;
 import com.viettelpost.remoteconfig.remotefirebase.app.model.EvenActivityMain;
 
-
+//Main
 public class MainActivity extends AppCompatActivity {
     private ImageView imgBack;
     private EditText mail, pass;
@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         a.hide();
 
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
