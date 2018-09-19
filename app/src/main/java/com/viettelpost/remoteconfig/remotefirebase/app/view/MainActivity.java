@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBlur() {
-        BlurImage.with(getApplicationContext()).load(R.drawable.cytyy).intensity(8).Async(true).into(imgBack);
+       BlurImage.with(getApplicationContext()).load(R.drawable.cytyy).intensity(8).Async(true).into(imgBack);
     }
 
 

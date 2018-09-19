@@ -18,6 +18,7 @@ public class GetTokenApi {
     private static GetTokenApi getTokenApi;
     private static KeyRest keyRest = KeyRest.getKeyRest();
     private static Activity activity;
+    private String TokenCode;
 
     private GetTokenApi(Activity a) {
         this.activity = a;
@@ -31,17 +32,27 @@ public class GetTokenApi {
     }
 
 
-    public String showToken() throws IOException {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        InputStream inputStream = activity.getApplicationContext().getResources().getAssets()
-                .open("keyAdmin.json", Context.MODE_WORLD_READABLE);
-        String SCOPES = keyRest.getSCOPES();
-        GoogleCredential googleCredential = GoogleCredential
-                .fromStream(inputStream)
-                .createScoped(Arrays.asList(SCOPES));
-        googleCredential.refreshToken();
-        System.out.println(googleCredential.getAccessToken());
-        return googleCredential.getAccessToken();
+    private String showToken() {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            InputStream inputStream = activity.getApplicationContext().getResources().getAssets()
+                    .open("keyAdmin.json", Context.MODE_WORLD_READABLE);
+            String SCOPES = keyRest.getSCOPES();
+            GoogleCredential googleCredential = GoogleCredential
+                    .fromStream(inputStream)
+                    .createScoped(Arrays.asList(SCOPES));
+            googleCredential.refreshToken();
+            System.out.println(googleCredential.getAccessToken());
+            TokenCode = googleCredential.getAccessToken();
+        } catch (IOException e) {
+
+        }
+        return TokenCode;
     }
+
+    public String viewToken(){
+        return showToken();
+    }
+
 }
