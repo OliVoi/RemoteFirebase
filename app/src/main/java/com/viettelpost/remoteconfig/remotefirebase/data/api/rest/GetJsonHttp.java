@@ -23,7 +23,10 @@ import java.util.zip.GZIPInputStream;
 public class GetJsonHttp {
     private static Activity activity;
     private static GetJsonHttp jsonHttp;
-    private String BASE_URL, REMOTE_CONFIG_ENDPOINT, viewJsonHttp;
+    private static String viewJsonHttp;
+    private static KeyRest keyRest = KeyRest.getKeyRest();
+    private static String BASE_URL = keyRest.getBaseUrl();
+    private static String REMOTE_CONFIG_ENDPOINT = keyRest.getRemoteConfigEndpoint();
 
     private GetJsonHttp(Activity a) {
         this.activity = a;
@@ -37,11 +40,6 @@ public class GetJsonHttp {
     }
 
     private String getTemplate() {
-        KeyRest keyRest = KeyRest.getKeyRest();
-
-        BASE_URL = keyRest.getBaseUrl();
-        REMOTE_CONFIG_ENDPOINT = keyRest.getRemoteConfigEndpoint();
-
         try {
             HttpURLConnection httpURLConnection = getCommonConnection(BASE_URL + REMOTE_CONFIG_ENDPOINT);
             httpURLConnection.setRequestMethod("GET");
@@ -69,8 +67,8 @@ public class GetJsonHttp {
                 outputStreamWriter.close();
 
                 // Print ETag
-                String etag = httpURLConnection.getHeaderField("ETag");
-                System.out.println("ETag from server: " + etag);
+
+
             } else {
                 System.out.println(inputstreamToString(httpURLConnection.getErrorStream()));
             }
@@ -95,6 +93,19 @@ public class GetJsonHttp {
         httpURLConnection.setRequestProperty("Authorization", "Bearer " + GetTokenApi.CallGetTokenApi(activity).viewToken());
         httpURLConnection.setRequestProperty("Content-Type", "application/json; UTF-8");
         return httpURLConnection;
+    }
+
+    public String GetEtag() {
+        String etag = "";
+        try {
+            HttpURLConnection httpURLConnection = getCommonConnection(BASE_URL + REMOTE_CONFIG_ENDPOINT);
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestProperty("Accept-Encoding", "gzip");
+            etag = httpURLConnection.getHeaderField("ETag");
+        } catch (Exception e) {
+        }
+
+        return etag;
     }
 
     public String getJsonHttp() {
