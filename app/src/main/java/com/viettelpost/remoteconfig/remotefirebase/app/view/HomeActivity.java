@@ -37,19 +37,28 @@ public class HomeActivity extends AppCompatActivity {
         GetData data = GetData.CallGetData(this);
         data.showParamater();
 
+        Log.e("lll", data.showDataConditions().toString());
 
-        Log.e("yyy", data.showVersion().toString() + " : " + data.showParamater().get(3).getConditionalValues().get(0).getKey());
-        view();
+        viewre();
     }
 
-    public void view() {
+    public void viewre() {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         GetData data = GetData.CallGetData(this);
-        Log.e("iiiii", data.showParamater().toString());
-        DataAdapter adapter = new DataAdapter(data.showParamater(), this);
-        Log.e("view", adapter.getData().get(0).getTitle());
+        Log.e("iiiii", String.valueOf(data.showParamater().size()));
+
+        DataAdapter adapter = new DataAdapter(data.showParamater(), this, this, new DataAdapter.CallBackData() {
+            @Override
+            public void onClickItem( int a) {
+                Log.e("daay ", String.valueOf(a));
+            }
+
+        });
+
+
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 }

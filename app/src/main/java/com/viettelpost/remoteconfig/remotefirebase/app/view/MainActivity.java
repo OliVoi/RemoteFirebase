@@ -17,13 +17,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText mail, pass;
     private Button btnLogin, btnRegister;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        ActionBar a = getSupportActionBar();
-        a.hide();
-
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        ActionBar a = getSupportActionBar();
+//        a.hide();
+//
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

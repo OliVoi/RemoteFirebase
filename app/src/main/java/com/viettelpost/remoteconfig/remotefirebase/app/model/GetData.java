@@ -90,8 +90,10 @@ public class GetData {
         parameters parameters = null;
 
         try {
+            Log.v("hung: ", getJson.getJsonParamater().toString());
             JSONObject jsonObject = new JSONObject(getJson.getJsonParamater());
             Iterator<String> iter = jsonObject.keys();
+
             while (iter.hasNext()) {
                 String description = "";
                 String title = "";
@@ -105,8 +107,9 @@ public class GetData {
                 JSONObject jsonObject3 = new JSONObject(jsonObject2.toString());
 
 
-                description = jsonObject3.getString("description");
-
+                if (jsonObject3.has("description")) {
+                    description = jsonObject3.getString("description");
+                }
                 Log.e("hhhh", description);
 
                 if (jsonObject3.has("conditionalValues")) {
