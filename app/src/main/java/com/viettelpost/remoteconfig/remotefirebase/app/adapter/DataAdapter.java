@@ -3,11 +3,14 @@ package com.viettelpost.remoteconfig.remotefirebase.app.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.viettelpost.remoteconfig.remotefirebase.R;
@@ -22,14 +25,13 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHoder> {
 
     private Context context;
     private ArrayList<parameters> data;
-    private Activity activity;
+    private ArrayList<String> conditionaValues;
+    DemoAdapter demoAdapter;
     private CallBackData callBackData;
 
-    public DataAdapter(ArrayList<parameters> parameters, Context context, Activity a, CallBackData c) {
+    public DataAdapter(ArrayList<parameters> parameters, Context context) {
         this.data = parameters;
         this.context = context;
-        this.activity = a;
-        this.callBackData = c;
     }
 
     @NonNull
@@ -52,21 +54,46 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHoder> {
 
         TextView txttitle = viewHoder.txtTitle;
         TextView txtdefau = viewHoder.txtDess;
-        final TextView txtkey = viewHoder.txtKey;
-        GetData d = GetData.CallGetData(activity);
+        RecyclerView lists = viewHoder.re;
+
+
+        GetData d = GetData.CallGetData(context);
         String a = "";
         txttitle.setText(data.get(i).getTitle());
         txtdefau.setText(data.get(i).getDescription());
 
-        callBackData.onClickItem(i);
+//        callBackData.onClickItem(i);
 
-        for (int o = 0; o < data.get(i).getConditionalValues().size(); o++) {
-            a += data.get(i).getConditionalValues().get(o).getKey() + "\n";
-            txtkey.setText(a);
+        conditionaValues = new ArrayList<String>();
+
+//        for(int e = 0 ; e < data.get(i).getConditionalValues().size(); e++){
+//            if(data.get(i).getConditionalValues().get(e).getKey().equals("")){
+//                Log.e("vaoday", "vao");
+//                conditionaValues.clear();
+//            }
+//            else {
+//                Log.e("kiemtra", data.get(i).getConditionalValues().get(e).getValue());
+//            }
+//
+//        }
+
+        Log.e("chieudai", String.valueOf(data.get(i).getConditionalValues().size()));
+
+        if(data.get(i).getConditionalValues() != null){
+            for (int e = 0; e < data.get(i).getConditionalValues().size(); e++) {
+                conditionaValues.add(data.get(i).getConditionalValues().get(e).getKey());
+            }
+            demoAdapter = new DemoAdapter(conditionaValues);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+            lists.setLayoutManager(layoutManager);
+            lists.setAdapter(demoAdapter);
         }
 
+
     }
-//hiihi
+
     @Override
     public int getItemCount() {
         return data.size();
@@ -82,22 +109,15 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHoder> {
         public TextView txtTitle;
         public TextView txtDess;
         public TextView txtKey;
+        public RecyclerView re;
 
         public ViewHoder(@NonNull View itemView) {
             super(itemView);
 
             txtTitle = itemView.findViewById(R.id.txt_title);
             txtDess = itemView.findViewById(R.id.txt_dess);
-            txtKey = itemView.findViewById(R.id.txt_key);
+            re = itemView.findViewById(R.id.recy_demo);
 
-            txtKey.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (callBackData != null) {
-                        callBackData.onClickItem(1);
-                    }
-                }
-            });
 
         }
     }

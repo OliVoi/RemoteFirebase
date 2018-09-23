@@ -17,14 +17,14 @@ import java.util.Arrays;
 public class GetTokenApi {
     private static GetTokenApi getTokenApi;
     private static KeyRest keyRest = KeyRest.getKeyRest();
-    private static Activity activity;
     private String TokenCode;
+    private static Context context;
 
-    private GetTokenApi(Activity a) {
-        this.activity = a;
+    private GetTokenApi(Context a) {
+        this.context = a;
     }
 
-    public static GetTokenApi CallGetTokenApi(Activity a) {
+    public static GetTokenApi CallGetTokenApi(Context a) {
         if (getTokenApi == null) {
             getTokenApi = new GetTokenApi(a);
         }
@@ -36,7 +36,7 @@ public class GetTokenApi {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            InputStream inputStream = activity.getApplicationContext().getResources().getAssets()
+            InputStream inputStream = context.getApplicationContext().getResources().getAssets()
                     .open("keyAdmin.json", Context.MODE_WORLD_READABLE);
             String SCOPES = keyRest.getSCOPES();
             GoogleCredential googleCredential = GoogleCredential

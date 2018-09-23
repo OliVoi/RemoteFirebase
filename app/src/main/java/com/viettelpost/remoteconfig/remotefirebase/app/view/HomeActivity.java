@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private Button btnLogOut;
     private RecyclerView recyclerView;
+    GetData getData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +28,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         btnLogOut = findViewById(R.id.btnOut);
         recyclerView = (RecyclerView) findViewById(R.id.recycel);
-
-
-        EvenActivityMain fid = EvenActivityMain.getFind(this);
-        fid.getLogOut(btnLogOut);
-
-
-        String etag = GetJsonHttp.getJsonSpi(this).GetEtag();
-        GetData data = GetData.CallGetData(this);
-        data.showParamater();
-
-        Log.e("lll", data.showDataConditions().toString());
 
         viewre();
     }
@@ -48,13 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         GetData data = GetData.CallGetData(this);
         Log.e("iiiii", String.valueOf(data.showParamater().size()));
 
-        DataAdapter adapter = new DataAdapter(data.showParamater(), this, this, new DataAdapter.CallBackData() {
-            @Override
-            public void onClickItem( int a) {
-                Log.e("daay ", String.valueOf(a));
-            }
-
-        });
+        DataAdapter adapter = new DataAdapter(data.showParamater(), this);
 
 
         recyclerView.setAdapter(adapter);

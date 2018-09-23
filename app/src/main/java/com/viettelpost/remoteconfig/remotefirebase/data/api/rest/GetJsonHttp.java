@@ -21,18 +21,18 @@ import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
 
 public class GetJsonHttp {
-    private static Activity activity;
+    private static Context context;
     private static GetJsonHttp jsonHttp;
     private static String viewJsonHttp;
     private static KeyRest keyRest = KeyRest.getKeyRest();
     private static String BASE_URL = keyRest.getBaseUrl();
     private static String REMOTE_CONFIG_ENDPOINT = keyRest.getRemoteConfigEndpoint();
 
-    private GetJsonHttp(Activity a) {
-        this.activity = a;
+    private GetJsonHttp(Context a) {
+        this.context = a;
     }
 
-    public static GetJsonHttp getJsonSpi(Activity a) {
+    public static GetJsonHttp getJsonSpi(Context a) {
         if (jsonHttp == null) {
             jsonHttp = new GetJsonHttp(a);
         }
@@ -62,7 +62,7 @@ public class GetJsonHttp {
 //            printWriter.flush();
 //            printWriter.close();
 
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(activity.openFileOutput("myData.json", activity.MODE_PRIVATE));
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("myData.json", context.MODE_PRIVATE));
                 outputStreamWriter.write(viewJsonHttp);
                 outputStreamWriter.close();
 
@@ -90,7 +90,7 @@ public class GetJsonHttp {
     private static HttpURLConnection getCommonConnection(String endpoint) throws IOException {
         URL url = new URL(endpoint);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestProperty("Authorization", "Bearer " + GetTokenApi.CallGetTokenApi(activity).viewToken());
+        httpURLConnection.setRequestProperty("Authorization", "Bearer " + GetTokenApi.CallGetTokenApi(context).viewToken());
         httpURLConnection.setRequestProperty("Content-Type", "application/json; UTF-8");
         return httpURLConnection;
     }

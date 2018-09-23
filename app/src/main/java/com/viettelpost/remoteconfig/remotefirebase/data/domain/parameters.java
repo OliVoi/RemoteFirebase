@@ -16,6 +16,13 @@ public class parameters {
         this.conditionalValues = conditionalValues;
     }
 
+    public parameters(String title, String description, String defaultValue) {
+        this.title = title;
+        this.description = description;
+        this.defaultValue = defaultValue;
+    }
+
+
     public String getTitle() {
         return title;
     }
@@ -32,4 +39,19 @@ public class parameters {
         return conditionalValues;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public void setConditionalValues(ArrayList<ConditionaValues> conditionalValues) {
+        this.conditionalValues = conditionalValues;
+    }
 }

@@ -1,6 +1,7 @@
 package com.viettelpost.remoteconfig.remotefirebase.app.model;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
@@ -21,21 +22,20 @@ import java.util.Iterator;
 public class GetData {
     private static GetData getData;
     private String key;
-    private static Activity activity;
+    private static Context context;
     private static ArrayList<parameters> getParamater;
     private static ArrayList<Conditions> getConditions;
     private static ArrayList<Version> getVersion;
     private static ArrayList<ConditionaValues> conditionaValues;
-    private static GetJson getJson = GetJson.getJsonConditions(activity);
 
-    private GetData(Activity a) {
-        this.activity = a;
+    private GetData(Context a) {
+        this.context = a;
     }
 
     public GetData() {
     }
 
-    public static GetData CallGetData(Activity a) {
+    public static GetData CallGetData(Context a) {
         if (getData == null) {
             getData = new GetData(a);
         }
@@ -44,6 +44,7 @@ public class GetData {
 
     public ArrayList<Conditions> showDataConditions() {
         int i = 0;
+        GetJson getJson = GetJson.getJsonConditions(context);
         getConditions = new ArrayList<Conditions>();
         try {
             JSONArray jsonArray = new JSONArray(getJson.getJsonCondition());
@@ -64,6 +65,7 @@ public class GetData {
     }
 
     public ArrayList<Version> showVersion() {
+        GetJson getJson = GetJson.getJsonConditions(context);
         int i = 0;
         getVersion = new ArrayList<Version>();
         try {
@@ -85,55 +87,81 @@ public class GetData {
     }
 
     public ArrayList<parameters> showParamater() {
-
+        GetJson getJson = GetJson.getJsonConditions(context);
         getParamater = new ArrayList<parameters>();
         parameters parameters = null;
 
         try {
+
             Log.v("hung: ", getJson.getJsonParamater().toString());
             JSONObject jsonObject = new JSONObject(getJson.getJsonParamater());
+
             Iterator<String> iter = jsonObject.keys();
 
+            String description = "";
+            String title = "";
+            String defaultValue = "";
+            String conditionalValues = "";
+            String conditionalKey = "";
+
             while (iter.hasNext()) {
-                String description = "";
-                String title = "";
-                String defaultValue = "";
-                String conditionalValues = "";
-                String conditionalKey = "";
+
+                description = "";
+                title = "";
+                defaultValue = "";
+                conditionalValues = "";
+                conditionalKey = "";
+
 
                 title = iter.next();
+
                 JSONObject jsonObject2 = jsonObject.getJSONObject(title);
 
                 JSONObject jsonObject3 = new JSONObject(jsonObject2.toString());
 
+                Log.e("jsonobject3", jsonObject3.toString());
 
                 if (jsonObject3.has("description")) {
                     description = jsonObject3.getString("description");
+                    Log.e("hhhh", description);
                 }
-                Log.e("hhhh", description);
+
 
                 if (jsonObject3.has("conditionalValues")) {
                     conditionaValues = new ArrayList<ConditionaValues>();
+
                     JSONObject jsonObject5 = new JSONObject(jsonObject3.getJSONObject("conditionalValues").toString());
+
+                    Log.e("jsonobject5", jsonObject5.toString());
+
                     Iterator<String> iter2 = jsonObject5.keys();
                     while (iter2.hasNext()) {
                         conditionalKey = iter2.next();
                         JSONObject jsonObject6 = jsonObject5.getJSONObject(conditionalKey);
+
+                        Log.e("jsonobject6", jsonObject6.toString());
+
                         conditionalValues = jsonObject6.getString("value");
                         ConditionaValues co = new ConditionaValues(conditionalValues, conditionalKey);
                         conditionaValues.add(co);
-                        Log.e("value", conditionalKey + " : " + jsonObject6.getString("value"));
+                        Log.e("valueooooooooooooo",  conditionalKey + " : " + jsonObject6.getString("value"));
                     }
                 }
-                JSONObject jsonObject4 = jsonObject3.getJSONObject("defaultValue");
-                defaultValue = jsonObject4.getString("value");
 
-                Log.e("value thuc: ", title + " : " + description + " : " + defaultValue + " : " + conditionalValues + " : " + conditionalKey);
-                parameters = new parameters(title, description, defaultValue, conditionaValues);
+                if (jsonObject3.has("defaultValue")) {
+                    JSONObject jsonObject4 = jsonObject3.getJSONObject("defaultValue");
+                    defaultValue = jsonObject4.getString("value");
+                }
+
+                Log.e("value thuc: ", title + " : " + description + " : " + defaultValue + " : " + conditionalKey + " : " + conditionalValues);
+
+                if (conditionalKey == null) {
+                    parameters = new parameters(title, description, defaultValue);
+                } else if (conditionalKey != null) {
+                    parameters = new parameters(title, description, defaultValue, conditionaValues);
+                }
                 getParamater.add(parameters);
-
             }
-
 
         } catch (Exception e)
 
