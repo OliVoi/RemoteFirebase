@@ -66,24 +66,13 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHoder> {
 
         conditionaValues = new ArrayList<String>();
 
-//        for(int e = 0 ; e < data.get(i).getConditionalValues().size(); e++){
-//            if(data.get(i).getConditionalValues().get(e).getKey().equals("")){
-//                Log.e("vaoday", "vao");
-//                conditionaValues.clear();
-//            }
-//            else {
-//                Log.e("kiemtra", data.get(i).getConditionalValues().get(e).getValue());
-//            }
-//
-//        }
-
         Log.e("chieudai", String.valueOf(data.get(i).getConditionalValues().size()));
 
         if(data.get(i).getConditionalValues() != null){
-            for (int e = 0; e < data.get(i).getConditionalValues().size(); e++) {
-                conditionaValues.add(data.get(i).getConditionalValues().get(e).getKey());
-            }
-            demoAdapter = new DemoAdapter(conditionaValues);
+//            for (int e = 0; e < data.get(i).getConditionalValues().size(); e++) {
+//                conditionaValues.add(data.get(i).getConditionalValues().get(e).getKey());
+//            }
+            demoAdapter = new DemoAdapter(data.get(i).getConditionalValues());
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 

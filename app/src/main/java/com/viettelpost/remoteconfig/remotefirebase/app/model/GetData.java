@@ -126,10 +126,8 @@ public class GetData {
                     Log.e("hhhh", description);
                 }
 
-
+                conditionaValues = new ArrayList<ConditionaValues>();
                 if (jsonObject3.has("conditionalValues")) {
-                    conditionaValues = new ArrayList<ConditionaValues>();
-
                     JSONObject jsonObject5 = new JSONObject(jsonObject3.getJSONObject("conditionalValues").toString());
 
                     Log.e("jsonobject5", jsonObject5.toString());
@@ -144,7 +142,7 @@ public class GetData {
                         conditionalValues = jsonObject6.getString("value");
                         ConditionaValues co = new ConditionaValues(conditionalValues, conditionalKey);
                         conditionaValues.add(co);
-                        Log.e("valueooooooooooooo",  conditionalKey + " : " + jsonObject6.getString("value"));
+                        Log.e("valueooooooooooooo", conditionalKey + " : " + jsonObject6.getString("value"));
                     }
                 }
 

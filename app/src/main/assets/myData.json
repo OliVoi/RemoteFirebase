@@ -1,0 +1,70 @@
+{
+  "conditions": [
+    {
+      "name": "setColor",
+      "expression": "device.os == 'ios'",
+      "tagColor": "PURPLE"
+    },
+    {
+      "name": "andorid",
+      "expression": "device.os == 'android'",
+      "tagColor": "ORANGE"
+    },
+    {
+      "name": "ios",
+      "expression": "device.os == 'ios'",
+      "tagColor": "PINK"
+    }
+  ],
+  "parameters": {
+    "check_action_bar": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "description": "bật tắt action bar"
+    },
+    "set_theme": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "description": "cấu hình theme"
+    },
+    "set_color": {
+      "defaultValue": {
+        "value": "RED"
+      },
+      "conditionalValues": {
+        "andorid": {
+          "value": "BLUE"
+        },
+        "ios": {
+          "value": "RED"
+        }
+      },
+      "description": "đây là set color"
+    },
+    "tuss_mess": {
+      "defaultValue": {
+        "value": "chào"
+      },
+      "conditionalValues": {
+        "andorid": {
+          "value": "hello"
+        },
+        "ios": {
+          "value": "hi"
+        }
+      },
+      "description": "ddây là tuss mess...."
+    }
+  },
+  "version": {
+    "versionNumber": "39",
+    "updateTime": "2018-09-19T07:17:28.571Z",
+    "updateUser": {
+      "email": "hungpopper97@gmail.com"
+    },
+    "updateOrigin": "CONSOLE",
+    "updateType": "INCREMENTAL_UPDATE"
+  }
+}
