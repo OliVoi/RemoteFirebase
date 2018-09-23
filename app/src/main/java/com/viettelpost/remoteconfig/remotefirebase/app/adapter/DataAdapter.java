@@ -1,7 +1,7 @@
 package com.viettelpost.remoteconfig.remotefirebase.app.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,29 +9,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.viettelpost.remoteconfig.remotefirebase.R;
-import com.viettelpost.remoteconfig.remotefirebase.app.model.GetData;
-import com.viettelpost.remoteconfig.remotefirebase.data.domain.ConditionaValues;
+import com.viettelpost.remoteconfig.remotefirebase.data.domain.Conditions;
 import com.viettelpost.remoteconfig.remotefirebase.data.domain.parameters;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHoder> {
 
-    private Context context;
-    private ArrayList<parameters> data;
-    private ArrayList<String> conditionaValues;
-    DemoAdapter demoAdapter;
-    private CallBackData callBackData;
+    private static Context context;
+    private ArrayList<Conditions> conditionaValues;
+    private static ArrayList<parameters> data;
+    private static CallBackData callBackData;
 
-    public DataAdapter(ArrayList<parameters> parameters, Context context) {
+    public DataAdapter(ArrayList<parameters> parameters, Context context, ArrayList<Conditions> con) {
         this.data = parameters;
         this.context = context;
+        this.conditionaValues = con;
     }
 
     @NonNull
@@ -54,30 +50,24 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHoder> {
 
         TextView txttitle = viewHoder.txtTitle;
         TextView txtdefau = viewHoder.txtDess;
-        RecyclerView lists = viewHoder.re;
+        RecyclerView rec_child = viewHoder.recy_child;
+        TextView txt_defau = viewHoder.txtDefau;
 
-
-        GetData d = GetData.CallGetData(context);
-        String a = "";
         txttitle.setText(data.get(i).getTitle());
         txtdefau.setText(data.get(i).getDescription());
 
-//        callBackData.onClickItem(i);
+        if (data.get(i).getDefaultValue().length() != 0) {
+            txt_defau.setTextColor(Color.parseColor("#777777"));
+            txt_defau.setText(data.get(i).getDefaultValue());
+        }
 
-        conditionaValues = new ArrayList<String>();
-
-        Log.e("chieudai", String.valueOf(data.get(i).getConditionalValues().size()));
-
-        if(data.get(i).getConditionalValues() != null){
-//            for (int e = 0; e < data.get(i).getConditionalValues().size(); e++) {
-//                conditionaValues.add(data.get(i).getConditionalValues().get(e).getKey());
-//            }
-            demoAdapter = new DemoAdapter(data.get(i).getConditionalValues());
+        if (data.get(i).getConditionalValues().size() != 0) {
+            Log.e("uiuiuiuiu", String.valueOf(data.get(i).getConditionalValues().size()));
+            ConditionAdapter adapter = new ConditionAdapter(data.get(i).getConditionalValues(), context, conditionaValues);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-            lists.setLayoutManager(layoutManager);
-            lists.setAdapter(demoAdapter);
+            rec_child.setLayoutManager(layoutManager);
+            rec_child.setAdapter(adapter);
         }
 
 
@@ -95,19 +85,19 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHoder> {
 
     public class ViewHoder extends RecyclerView.ViewHolder {
 
-        public TextView txtTitle;
-        public TextView txtDess;
-        public TextView txtKey;
-        public RecyclerView re;
+        private TextView txtTitle;
+        private TextView txtDess;
+        private RecyclerView recy_child;
+        private TextView txtDefau;
+
 
         public ViewHoder(@NonNull View itemView) {
             super(itemView);
 
             txtTitle = itemView.findViewById(R.id.txt_title);
             txtDess = itemView.findViewById(R.id.txt_dess);
-            re = itemView.findViewById(R.id.recy_demo);
-
-
+            txtDefau = itemView.findViewById(R.id.valu_defau);
+            recy_child = itemView.findViewById(R.id.recy_child);
         }
     }
 

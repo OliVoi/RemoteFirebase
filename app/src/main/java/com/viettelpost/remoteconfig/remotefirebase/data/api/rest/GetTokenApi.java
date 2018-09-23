@@ -17,8 +17,8 @@ import java.util.Arrays;
 public class GetTokenApi {
     private static GetTokenApi getTokenApi;
     private static KeyRest keyRest = KeyRest.getKeyRest();
-    private String TokenCode;
     private static Context context;
+    private String TokenCode;
 
     private GetTokenApi(Context a) {
         this.context = a;
@@ -51,7 +51,7 @@ public class GetTokenApi {
         return TokenCode;
     }
 
-    public String viewToken(){
+    public String viewToken() {
         return showToken();
     }
 

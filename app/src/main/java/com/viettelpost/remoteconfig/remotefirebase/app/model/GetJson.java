@@ -13,6 +13,7 @@ public class GetJson {
     private static GetJson jsonConditions;
     private static String thisJsonCondition, thisJsonVersion, thisJsonParamater;
     private static Context context;
+    private static String http = GetJsonHttp.getJsonSpi(context).getJsonHttp();
     private static JSONObject jsonObject;
 
     public GetJson(Context a) {
@@ -27,9 +28,8 @@ public class GetJson {
     }
 
     public String getJsonCondition() {
-        GetJsonHttp http = GetJsonHttp.getJsonSpi(context);
         try {
-            jsonObject = new JSONObject(http.getJsonHttp());
+            jsonObject = new JSONObject(http);
             JSONArray jsonArray = jsonObject.getJSONArray("conditions");
             thisJsonCondition = jsonArray.toString();
         } catch (Exception e) {
@@ -38,9 +38,8 @@ public class GetJson {
     }
 
     public String getJsonVersion() {
-        GetJsonHttp http = GetJsonHttp.getJsonSpi(context);
         try {
-            jsonObject = new JSONObject(http.getJsonHttp());
+            jsonObject = new JSONObject(http);
             JSONObject jsonObject2 = jsonObject.getJSONObject("version");
             thisJsonVersion = jsonObject2.toString();
         } catch (Exception e) {
@@ -49,9 +48,8 @@ public class GetJson {
     }
 
     public String getJsonParamater() {
-        GetJsonHttp http = GetJsonHttp.getJsonSpi(context);
         try {
-            jsonObject = new JSONObject(http.getJsonHttp());
+            jsonObject = new JSONObject(http);
             JSONObject jsonObject2 = jsonObject.getJSONObject("parameters");
             thisJsonParamater = jsonObject2.toString();
         } catch (Exception e) {

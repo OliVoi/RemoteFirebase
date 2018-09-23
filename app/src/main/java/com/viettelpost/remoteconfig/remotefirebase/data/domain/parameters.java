@@ -16,12 +16,6 @@ public class parameters {
         this.conditionalValues = conditionalValues;
     }
 
-    public parameters(String title, String description, String defaultValue) {
-        this.title = title;
-        this.description = description;
-        this.defaultValue = defaultValue;
-    }
-
 
     public String getTitle() {
         return title;

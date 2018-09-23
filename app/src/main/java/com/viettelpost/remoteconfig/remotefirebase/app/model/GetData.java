@@ -21,12 +21,13 @@ import java.util.Iterator;
 
 public class GetData {
     private static GetData getData;
-    private String key;
+    private static String key;
     private static Context context;
     private static ArrayList<parameters> getParamater;
     private static ArrayList<Conditions> getConditions;
     private static ArrayList<Version> getVersion;
     private static ArrayList<ConditionaValues> conditionaValues;
+    private static GetJson getJson = GetJson.getJsonConditions(context);
 
     private GetData(Context a) {
         this.context = a;
@@ -44,19 +45,27 @@ public class GetData {
 
     public ArrayList<Conditions> showDataConditions() {
         int i = 0;
-        GetJson getJson = GetJson.getJsonConditions(context);
         getConditions = new ArrayList<Conditions>();
         try {
             JSONArray jsonArray = new JSONArray(getJson.getJsonCondition());
             if (!jsonArray.isNull(0)) {
                 for (; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String name = jsonObject.getString("name");
-                    String expression = jsonObject.getString("expression");
-                    String tagColor = jsonObject.getString("tagColor");
+                    String name = "";
+                    String expression = "";
+                    String tagColor = "";
+                    if (jsonObject.length() == 3) {
+                        name = jsonObject.getString("name");
+                        expression = jsonObject.getString("expression");
+                        tagColor = jsonObject.getString("tagColor");
+                    }
+                    else {
+                        name = jsonObject.getString("name");
+                        expression = jsonObject.getString("expression");
+                        tagColor = "LOVE";
+                    }
                     Conditions conditions = new Conditions(name, expression, tagColor);
                     getConditions.add(conditions);
-                    Log.e("lll", getConditions.get(i).getName());
                 }
             }
         } catch (Exception e) {
@@ -65,7 +74,6 @@ public class GetData {
     }
 
     public ArrayList<Version> showVersion() {
-        GetJson getJson = GetJson.getJsonConditions(context);
         int i = 0;
         getVersion = new ArrayList<Version>();
         try {
@@ -87,83 +95,63 @@ public class GetData {
     }
 
     public ArrayList<parameters> showParamater() {
-        GetJson getJson = GetJson.getJsonConditions(context);
+
         getParamater = new ArrayList<parameters>();
         parameters parameters = null;
 
         try {
-
             Log.v("hung: ", getJson.getJsonParamater().toString());
             JSONObject jsonObject = new JSONObject(getJson.getJsonParamater());
-
             Iterator<String> iter = jsonObject.keys();
 
-            String description = "";
-            String title = "";
-            String defaultValue = "";
-            String conditionalValues = "";
-            String conditionalKey = "";
-
             while (iter.hasNext()) {
-
-                description = "";
-                title = "";
-                defaultValue = "";
-                conditionalValues = "";
-                conditionalKey = "";
-
+                String description = "";
+                String title = "";
+                String defaultValue = "";
+                String conditionalValues = "";
+                String conditionalKey = "";
 
                 title = iter.next();
-
                 JSONObject jsonObject2 = jsonObject.getJSONObject(title);
 
                 JSONObject jsonObject3 = new JSONObject(jsonObject2.toString());
 
-                Log.e("jsonobject3", jsonObject3.toString());
 
                 if (jsonObject3.has("description")) {
                     description = jsonObject3.getString("description");
-                    Log.e("hhhh", description);
                 }
-
-                conditionaValues = new ArrayList<ConditionaValues>();
-                if (jsonObject3.has("conditionalValues")) {
-                    JSONObject jsonObject5 = new JSONObject(jsonObject3.getJSONObject("conditionalValues").toString());
-
-                    Log.e("jsonobject5", jsonObject5.toString());
-
-                    Iterator<String> iter2 = jsonObject5.keys();
-                    while (iter2.hasNext()) {
-                        conditionalKey = iter2.next();
-                        JSONObject jsonObject6 = jsonObject5.getJSONObject(conditionalKey);
-
-                        Log.e("jsonobject6", jsonObject6.toString());
-
-                        conditionalValues = jsonObject6.getString("value");
-                        ConditionaValues co = new ConditionaValues(conditionalValues, conditionalKey);
-                        conditionaValues.add(co);
-                        Log.e("valueooooooooooooo", conditionalKey + " : " + jsonObject6.getString("value"));
-                    }
-                }
+                Log.e("hhhh", description);
 
                 if (jsonObject3.has("defaultValue")) {
                     JSONObject jsonObject4 = jsonObject3.getJSONObject("defaultValue");
                     defaultValue = jsonObject4.getString("value");
                 }
 
-                Log.e("value thuc: ", title + " : " + description + " : " + defaultValue + " : " + conditionalKey + " : " + conditionalValues);
+                conditionaValues = new ArrayList<ConditionaValues>();
+                conditionaValues.clear();
 
-                if (conditionalKey == null) {
-                    parameters = new parameters(title, description, defaultValue);
-                } else if (conditionalKey != null) {
-                    parameters = new parameters(title, description, defaultValue, conditionaValues);
+                if (jsonObject3.has("conditionalValues")) {
+
+                    JSONObject jsonObject5 = new JSONObject(jsonObject3.getJSONObject("conditionalValues").toString());
+                    Log.e("iiiiiiooioioio", jsonObject5.toString());
+                    Iterator<String> iter2 = jsonObject5.keys();
+                    while (iter2.hasNext()) {
+                        conditionalKey = iter2.next();
+                        JSONObject jsonObject6 = jsonObject5.getJSONObject(conditionalKey);
+                        conditionalValues = jsonObject6.getString("value");
+                        ConditionaValues co = new ConditionaValues(conditionalValues, conditionalKey);
+                        conditionaValues.add(co);
+                        Log.e("value", conditionalKey + " : " + jsonObject6.getString("value"));
+
+                    }
                 }
+
+                Log.e("value thuc: ", title + " : " + description + " : " + defaultValue + " : " + conditionalValues + " : " + conditionalKey);
+                parameters = new parameters(title, description, defaultValue, conditionaValues);
                 getParamater.add(parameters);
+
             }
-
-        } catch (Exception e)
-
-        {
+        } catch (Exception e) {
         }
         return getParamater;
     }

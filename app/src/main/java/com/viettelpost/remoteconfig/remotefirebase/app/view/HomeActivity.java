@@ -18,31 +18,34 @@ import com.viettelpost.remoteconfig.remotefirebase.data.api.rest.GetJsonHttp;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button btnLogOut;
-    private RecyclerView recyclerView;
-    GetData getData;
+    private static Button btnLogOut;
+    private static RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        btnLogOut = findViewById(R.id.btnOut);
-        recyclerView = (RecyclerView) findViewById(R.id.recycel);
 
+        findId();
         viewre();
     }
 
-    public void viewre() {
+    private void viewre() {
+
+        GetData data = GetData.CallGetData(this);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        GetData data = GetData.CallGetData(this);
-        Log.e("iiiii", String.valueOf(data.showParamater().size()));
-
-        DataAdapter adapter = new DataAdapter(data.showParamater(), this);
-
-
+        DataAdapter adapter = new DataAdapter(data.showParamater(), this, data.showDataConditions());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void findId() {
+        btnLogOut = findViewById(R.id.btnOut);
+        recyclerView = findViewById(R.id.recycel);
+        EvenActivityMain fid = EvenActivityMain.getFind(this);
+        fid.getLogOut(btnLogOut);
+        GetJsonHttp jsonHttp = GetJsonHttp.getJsonSpi(this);
     }
 
 }
