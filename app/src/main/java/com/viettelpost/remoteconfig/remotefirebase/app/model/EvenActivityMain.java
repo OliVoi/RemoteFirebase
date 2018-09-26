@@ -1,6 +1,7 @@
 package com.viettelpost.remoteconfig.remotefirebase.app.model;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -20,11 +21,11 @@ import com.viettelpost.remoteconfig.remotefirebase.app.view.MainActivity;
 
 public class EvenActivityMain {
     private FirebaseAuth mAuth;
-    private Activity mainActivity;
+    private Activity Activity;
     private static EvenActivityMain evenActivityMain;
 
     private EvenActivityMain(Activity a) {
-        this.mainActivity = a;
+        this.Activity = a;
     }
 
     public static EvenActivityMain getFind(Activity a) {
@@ -42,9 +43,9 @@ public class EvenActivityMain {
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            Intent returnBtn = new Intent(mainActivity, HomeActivity.class);
+            Intent returnBtn = new Intent(Activity, HomeActivity.class);
             returnBtn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            mainActivity.startActivity(returnBtn);
+            Activity.startActivity(returnBtn);
         }
     }
 
@@ -53,7 +54,7 @@ public class EvenActivityMain {
             @Override
             public void onClick(View v) {
                 mAuth.createUserWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                        .addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(Activity, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
@@ -64,7 +65,7 @@ public class EvenActivityMain {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.e("show---", "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(mainActivity, "Authentication failed.",
+                                    Toast.makeText(Activity, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                     updateUI(null);
                                 }
@@ -80,10 +81,10 @@ public class EvenActivityMain {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(mainActivity, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
-                Intent returnBtn = new Intent(mainActivity, MainActivity.class);
+                Toast.makeText(Activity, "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                Intent returnBtn = new Intent(Activity, MainActivity.class);
                 returnBtn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                mainActivity.startActivity(returnBtn);
+                Activity.startActivity(returnBtn);
             }
         });
 
@@ -95,13 +96,13 @@ public class EvenActivityMain {
             public void onClick(View v) {
 
                 mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
-                        .addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(Activity, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    Toast.makeText(mainActivity, "Đăng nhập thành công",
+                                    Toast.makeText(Activity, "Đăng nhập thành công",
                                             Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     updateUI(user);
@@ -110,9 +111,9 @@ public class EvenActivityMain {
                                     Log.e("Error: ", "signInWithEmail:failure", task.getException());
                                     email.setError("");
                                     pass.setError("");
-                                    Toast.makeText(mainActivity, "Đăng nhập thất bại",
+                                    Toast.makeText(Activity, "Đăng nhập thất bại",
                                             Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(mainActivity, "Email hoặc mật khẩu không đúng",
+                                    Toast.makeText(Activity, "Email hoặc mật khẩu không đúng",
                                             Toast.LENGTH_SHORT).show();
                                     updateUI(null);
                                 }
@@ -125,11 +126,13 @@ public class EvenActivityMain {
 
     }
 
-    public void OverLoad(Button button){
+    public void OverLoad(Button button, final ProgressDialog progressDialog) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.recreate();
+                progressDialog.setMessage("Registering Please Wait...");
+                progressDialog.show();
+
             }
         });
     }

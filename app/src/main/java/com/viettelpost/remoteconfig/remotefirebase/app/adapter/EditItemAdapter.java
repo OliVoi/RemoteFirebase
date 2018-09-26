@@ -24,10 +24,12 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.editVi
 
     private ArrayList<ConditionaValues> dataValue;
     private Context context;
+    private ArrayList<Conditions> dataConditions;
 
-    public EditItemAdapter(ArrayList<ConditionaValues> dataValue, Context context) {
+    public EditItemAdapter(ArrayList<ConditionaValues> dataValue, Context context, ArrayList<Conditions> con) {
         this.dataValue = dataValue;
         this.context = context;
+        this.dataConditions = con;
     }
 
     @NonNull
@@ -41,12 +43,30 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.editVi
     @Override
     public void onBindViewHolder(@NonNull editViewHoder hoder, int position) {
 
-        if (dataValue.size() != 0) {
-            Log.e("lolololoo", dataValue.get(position).getKey());
-            Log.e("lolololoo", dataValue.get(position).getValue());
-        }
-    }
 
+        if (dataValue.get(position).getKey().length() != 0) {
+
+
+            for (int i = 0; i < dataConditions.size(); i++) {
+                String condition = dataConditions.get(i).getName();
+                if (dataValue.get(position).getKey().equals(condition)) {
+                    for (int e = 0; e < hoder.myColors.size(); e++) {
+                        String thisColor = hoder.myColors.get(e).getColorName();
+                        if (dataConditions.get(i).getTagColor().equals(thisColor)) {
+                            hoder.editConditionValue.setText(dataValue.get(position).getValue());
+                            hoder.editConditionValue.setTextColor(Color.parseColor(hoder.myColors.get(e).getColorCode()));
+                            hoder.txtConditionKey.setTextColor(Color.parseColor(hoder.myColors.get(e).getColorCode()));
+                            hoder.txtConditionKey.setText(dataValue.get(position).getKey());
+                        }
+                    }
+                }
+            }
+        } else {
+            hoder.editConditionValue.setText("Không có giá trị");
+            hoder.editConditionValue.setTextColor(Color.parseColor("#ff0000"));
+        }
+
+    }
 
     @Override
     public int getItemCount() {
@@ -66,7 +86,7 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.editVi
         public editViewHoder(@NonNull View itemView) {
             super(itemView);
             editConditionValue = itemView.findViewById(R.id.edit_condition);
-            txtConditionKey = itemView.findViewById(R.id.txt_key_conditions);
+            txtConditionKey = itemView.findViewById(R.id.txt_condition);
             myColors = colorTag.dataColor();
         }
     }

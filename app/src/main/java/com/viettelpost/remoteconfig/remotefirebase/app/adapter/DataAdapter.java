@@ -51,16 +51,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapterViewHoder> {
 
         BindHolderData bindHolderData = new BindHolderData(viewHoder.txtTitle, viewHoder.txtDess, viewHoder.txtDefau, viewHoder.recy_child, data, i, context, conditionaValues);
         bindHolderData.getStart();
+        EvenClick(viewHoder, i);
 
-        viewHoder.clickItemEven(new DataAdapterViewHoder.ItemClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Intent intent= new Intent(context,EditItemActivity.class);
-                intent.putExtra("cusor", i);
-                intent.putExtra("data", (ArrayList<parameters>) data);
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -71,5 +63,26 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapterViewHoder> {
     @Override
     public int getItemViewType(int position) {
         return super.getItemViewType(position);
+    }
+
+    private void EvenClick(DataAdapterViewHoder viewHoder, final int i) {
+        viewHoder.btnIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditItemActivity.class);
+                intent.putExtra("cusor", i);
+                intent.putExtra("data", (ArrayList<parameters>) data);
+                context.startActivity(intent);
+            }
+        });
+        viewHoder.clickItemEven(new DataAdapterViewHoder.ItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(context, EditItemActivity.class);
+                intent.putExtra("cusor", i);
+                intent.putExtra("data", (ArrayList<parameters>) data);
+                context.startActivity(intent);
+            }
+        });
     }
 }

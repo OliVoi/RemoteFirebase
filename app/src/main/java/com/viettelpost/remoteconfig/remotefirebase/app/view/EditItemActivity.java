@@ -36,23 +36,37 @@ public class EditItemActivity extends AppCompatActivity {
 
         findId();
 
-        editTitle.setText(data.get(cusor).getTitle());
+        if (data.get(cusor).getTitle().length() != 0) {
+            editTitle.setText(data.get(cusor).getTitle());
+        }
+
+
         if (data.get(cusor).getDescription().length() != 0) {
             editDess.setText(data.get(cusor).getDescription());
         }
 
-        Log.e("uouououo", String.valueOf(data.get(cusor).getConditionalValues().size()));
+        if (data.get(cusor).getDefaultValue().length() != 0) {
+            editDefau.setText(data.get(cusor).getDefaultValue());
+        }
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        EditItemAdapter adapter = new EditItemAdapter(data.get(cusor).getConditionalValues(), EditItemActivity.this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (data.get(cusor).getConditionalValues().size() != 0) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            EditItemAdapter adapter = new EditItemAdapter(data.get(cusor).getConditionalValues(), this, conditionaValues);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        } else if (data.get(cusor).getConditionalValues().size() == 0) {
+            recyclerView.setAdapter(null);
+            recyclerView.setLayoutManager(null);
+        }
     }
 
     private void findId() {
         data = (ArrayList<parameters>) getIntent().getSerializableExtra("data");
         cusor = getIntent().getIntExtra("cusor", 0);
+
+        GetData dataa = GetData.CallGetData(this);
+        conditionaValues = dataa.showDataConditions();
 
         editTitle = findViewById(R.id.edit_title);
         editDess = findViewById(R.id.edit_dess);
