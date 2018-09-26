@@ -40,7 +40,7 @@ public class GetJsonHttp {
         return jsonHttp;
     }
 
-    private String getTemplate() {
+    public String getTemplate() {
         try {
             HttpURLConnection httpURLConnection = getCommonConnection(BASE_URL + REMOTE_CONFIG_ENDPOINT);
             httpURLConnection.setRequestMethod("GET");
@@ -109,9 +109,7 @@ public class GetJsonHttp {
         return etag;
     }
 
-    public String getJsonHttp() {
-        return getTemplate();
+    public interface callBack {
+        public void getMyJson(String json);
     }
-
-
 }

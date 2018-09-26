@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 import com.viettelpost.remoteconfig.remotefirebase.R;
 import com.viettelpost.remoteconfig.remotefirebase.app.adapter.DataAdapter;
+import com.viettelpost.remoteconfig.remotefirebase.app.model.ColorTag;
 import com.viettelpost.remoteconfig.remotefirebase.app.model.EvenActivityMain;
 import com.viettelpost.remoteconfig.remotefirebase.app.model.GetData;
 import com.viettelpost.remoteconfig.remotefirebase.app.model.GetJson;
@@ -18,13 +19,15 @@ import com.viettelpost.remoteconfig.remotefirebase.data.api.rest.GetJsonHttp;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static Button btnLogOut;
+    private static Button btnLogOut, btnLoad;
     private static RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        GetJsonHttp jsonHttp = GetJsonHttp.getJsonSpi(this);
 
         findId();
         viewre();
@@ -42,10 +45,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void findId() {
         btnLogOut = findViewById(R.id.btnOut);
+        btnLoad = findViewById(R.id.btn_load);
         recyclerView = findViewById(R.id.recycel);
         EvenActivityMain fid = EvenActivityMain.getFind(this);
         fid.getLogOut(btnLogOut);
-        GetJsonHttp jsonHttp = GetJsonHttp.getJsonSpi(this);
+        fid.OverLoad(btnLoad);
     }
 
 }

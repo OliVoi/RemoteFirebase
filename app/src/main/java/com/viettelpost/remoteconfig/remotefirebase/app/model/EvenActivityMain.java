@@ -124,4 +124,13 @@ public class EvenActivityMain {
         });
 
     }
+
+    public void OverLoad(Button button){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.recreate();
+            }
+        });
+    }
 }

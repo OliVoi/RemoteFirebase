@@ -13,7 +13,7 @@ public class GetJson {
     private static GetJson jsonConditions;
     private static String thisJsonCondition, thisJsonVersion, thisJsonParamater;
     private static Context context;
-    private static String http = GetJsonHttp.getJsonSpi(context).getJsonHttp();
+    private static GetJsonHttp http = GetJsonHttp.getJsonSpi(context) ;
     private static JSONObject jsonObject;
 
     public GetJson(Context a) {
@@ -29,7 +29,7 @@ public class GetJson {
 
     public String getJsonCondition() {
         try {
-            jsonObject = new JSONObject(http);
+            jsonObject = new JSONObject(http.getTemplate());
             JSONArray jsonArray = jsonObject.getJSONArray("conditions");
             thisJsonCondition = jsonArray.toString();
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class GetJson {
 
     public String getJsonVersion() {
         try {
-            jsonObject = new JSONObject(http);
+            jsonObject = new JSONObject(http.getTemplate());
             JSONObject jsonObject2 = jsonObject.getJSONObject("version");
             thisJsonVersion = jsonObject2.toString();
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class GetJson {
 
     public String getJsonParamater() {
         try {
-            jsonObject = new JSONObject(http);
+            jsonObject = new JSONObject(http.getTemplate());
             JSONObject jsonObject2 = jsonObject.getJSONObject("parameters");
             thisJsonParamater = jsonObject2.toString();
         } catch (Exception e) {
