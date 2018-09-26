@@ -1,6 +1,11 @@
 package com.viettelpost.remoteconfig.remotefirebase.data.domain;
 
-public class Conditions {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class Conditions implements Serializable {
     private String name, expression, tagColor;
 
     public Conditions() {
@@ -35,4 +40,5 @@ public class Conditions {
     public String getTagColor() {
         return tagColor;
     }
+
 }

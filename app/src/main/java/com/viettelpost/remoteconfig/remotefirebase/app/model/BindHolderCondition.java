@@ -32,17 +32,20 @@ public class BindHolderCondition {
         this.linLayout = linLayout;
     }
 
-    public void getStart(){
-        txtKey.setText(dataValue.get(position).getKey());
-        for (int i = 0; i < dataConditions.size(); i++) {
-            String condition = dataConditions.get(i).getName();
-            if (dataValue.get(position).getKey().equals(condition)) {
-                for (int e = 0; e < myColors.size(); e++) {
-                    String thisColor = myColors.get(e).getColorName();
-                    if (dataConditions.get(i).getTagColor().equals(thisColor)) {
-                        drawable = (GradientDrawable) linLayout.getBackground();
-                        drawable.setColor(Color.parseColor(myColors.get(e).getColorCode()));
-                        txtValue.setTextColor(Color.parseColor(myColors.get(e).getColorCode()));
+    public void getStart() {
+
+        if (dataValue.get(position).getKey().length() != 0) {
+            for (int i = 0; i < dataConditions.size(); i++) {
+                String condition = dataConditions.get(i).getName();
+                if (dataValue.get(position).getKey().equals(condition)) {
+                    for (int e = 0; e < myColors.size(); e++) {
+                        String thisColor = myColors.get(e).getColorName();
+                        if (dataConditions.get(i).getTagColor().equals(thisColor)) {
+                            drawable = (GradientDrawable) linLayout.getBackground();
+                            drawable.setColor(Color.parseColor(myColors.get(e).getColorCode()));
+                            txtValue.setTextColor(Color.parseColor(myColors.get(e).getColorCode()));
+                            txtKey.setText(dataValue.get(position).getKey());
+                        }
                     }
                 }
             }

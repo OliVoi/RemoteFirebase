@@ -1,7 +1,9 @@
 package com.viettelpost.remoteconfig.remotefirebase.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.viettelpost.remoteconfig.remotefirebase.R;
 import com.viettelpost.remoteconfig.remotefirebase.app.model.BindHolderData;
+import com.viettelpost.remoteconfig.remotefirebase.app.view.EditItemActivity;
 import com.viettelpost.remoteconfig.remotefirebase.data.domain.Conditions;
 import com.viettelpost.remoteconfig.remotefirebase.data.domain.parameters;
 
@@ -44,7 +47,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapterViewHoder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DataAdapterViewHoder viewHoder, int i) {
+    public void onBindViewHolder(@NonNull DataAdapterViewHoder viewHoder, final int i) {
 
         BindHolderData bindHolderData = new BindHolderData(viewHoder.txtTitle, viewHoder.txtDess, viewHoder.txtDefau, viewHoder.recy_child, data, i, context, conditionaValues);
         bindHolderData.getStart();
@@ -52,7 +55,10 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapterViewHoder> {
         viewHoder.clickItemEven(new DataAdapterViewHoder.ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context, "vị trí: " + position, Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(context,EditItemActivity.class);
+                intent.putExtra("cusor", i);
+                intent.putExtra("data", (ArrayList<parameters>) data);
+                context.startActivity(intent);
             }
         });
     }

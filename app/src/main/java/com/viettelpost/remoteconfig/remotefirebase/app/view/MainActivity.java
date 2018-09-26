@@ -17,13 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText mail, pass;
     private Button btnLogin, btnRegister;
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        ActionBar a = getSupportActionBar();
-//        a.hide();
-//
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBlur() {
-       BlurImage.with(getApplicationContext()).load(R.drawable.cytyy).intensity(8).Async(true).into(imgBack);
+        BlurImage.with(getApplicationContext()).load(R.drawable.cytyy).intensity(8).Async(true).into(imgBack);
     }
 
 

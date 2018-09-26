@@ -36,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     private void viewre() {
 
         GetData data = GetData.CallGetData(this);
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         DataAdapter adapter = new DataAdapter(data.showParamater(), this, data.showDataConditions());

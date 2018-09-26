@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Giá trị điều kiện của: "
+            android:textColor="#a5a5a5"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/txt_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:text="" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_condition"
+        android:textColor="#a5a5a5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boder_button_edit"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Không có giá trị" />
+
+</LinearLayout>

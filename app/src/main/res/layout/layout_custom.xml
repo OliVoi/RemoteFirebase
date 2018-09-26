@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginTop="3dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    android:layout_marginTop="3dp"
     android:background="@drawable/boder_child_custom"
-    android:layout_height="wrap_content"
     android:padding="10dp">
 
     <LinearLayout
@@ -45,42 +45,42 @@
         android:layout_weight="0.6"
         android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recy_child"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recy_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <!--defau value-->
         <LinearLayout
-            android:background="@drawable/boder_singer"
-            android:padding="2dp"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/boder_singer"
+            android:orientation="horizontal"
+            android:padding="2dp">
 
             <TextView
                 android:id="@+id/key_defau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:gravity="left"
-                android:textColor="#fff"
                 android:layout_weight="0"
-                android:text="Default Value" />
+                android:gravity="left"
+                android:padding="5dp"
+                android:text="Default Value"
+                android:textColor="#fff" />
 
             <TextView
                 android:id="@+id/valu_defau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/boder_right_item"
                 android:layout_weight="0"
-                android:textColor="#ff0000"
-                android:text="Không có giá trị" />
+                android:background="@drawable/boder_right_item"
+                android:text="Không có giá trị"
+                android:textColor="#ff0000" />
 
 
         </LinearLayout>
-        </LinearLayout>
+    </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/id"
@@ -90,6 +90,7 @@
 
         <ImageView
             android:id="@+id/imageView3"
+            android:padding="0dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/boder_button_edit"
@@ -99,5 +100,5 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_action_name" />
     </android.support.constraint.ConstraintLayout>
-    </LinearLayout>
+</LinearLayout>
 

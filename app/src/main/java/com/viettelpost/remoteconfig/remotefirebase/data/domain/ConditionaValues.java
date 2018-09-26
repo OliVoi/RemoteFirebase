@@ -1,6 +1,8 @@
 package com.viettelpost.remoteconfig.remotefirebase.data.domain;
 
-public class ConditionaValues {
+import java.io.Serializable;
+
+public class ConditionaValues implements Serializable {
     private String value, key;
 
     public ConditionaValues() {

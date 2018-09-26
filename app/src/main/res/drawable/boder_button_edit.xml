@@ -5,23 +5,23 @@
     <!-- View background color -->
     <!-- View border color and width -->
     <stroke
-    android:width="2dp"
-    android:color="@android:color/holo_green_dark" >
+    android:width="0.5dp"
+    android:color="#a5a5a5" >
     </stroke>
 
     <!-- The radius makes the corners rounded -->
     <corners
-        android:radius="30dp"   >
+        android:radius="5dp"   >
     </corners>
 
     <!--<solid-->
         <!--android:color="@android:color/holo_green_dark"-->
         <!--&gt;</solid>-->
 
-    <!--<padding-->
-    <!--android:right="2dp"-->
-    <!--android:bottom="2dp"-->
-    <!--android:left="2dp"-->
-    <!--android:top="2dp"></padding>-->
+    <padding
+    android:right="10dp"
+    android:bottom="10dp"
+    android:left="10dp"
+    android:top="10dp"></padding>
 
 </shape>

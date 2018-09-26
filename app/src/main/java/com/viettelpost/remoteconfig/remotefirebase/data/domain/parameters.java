@@ -1,8 +1,9 @@
 package com.viettelpost.remoteconfig.remotefirebase.data.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class parameters {
+public class parameters implements Serializable {
     private String title, description, defaultValue;
     private ArrayList<ConditionaValues> conditionalValues;
 
