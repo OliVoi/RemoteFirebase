@@ -2,6 +2,7 @@ package com.viettelpost.remoteconfig.remotefirebase.app.model;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -85,29 +86,33 @@ public class EvenActivityMain {
                 Intent returnBtn = new Intent(Activity, MainActivity.class);
                 returnBtn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 Activity.startActivity(returnBtn);
+
             }
         });
 
     }
 
-    public void getLogin(Button b, final EditText email, final EditText pass) {
+    public void getLogin(Button b, final EditText email, final EditText pass, ProgressDialog dialog, Context context) {
+        dialog = new ProgressDialog(context);
+
+        final ProgressDialog finalDialog = dialog;
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finalDialog.setMessage("Registering Please Wait...");
+                finalDialog.show();
+                finalDialog.setCanceledOnTouchOutside(false);
                 mAuth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString())
                         .addOnCompleteListener(Activity, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
                                     Toast.makeText(Activity, "Đăng nhập thành công",
                                             Toast.LENGTH_SHORT).show();
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     updateUI(user);
                                 } else {
-                                    // If sign in fails, display a message to the user.
                                     Log.e("Error: ", "signInWithEmail:failure", task.getException());
                                     email.setError("");
                                     pass.setError("");
@@ -120,20 +125,21 @@ public class EvenActivityMain {
 
                             }
                         });
-
             }
         });
-
+        finalDialog.dismiss();
     }
 
-    public void OverLoad(Button button, final ProgressDialog progressDialog) {
+    public void OverLoad(Button button, ProgressDialog progressDialog, final Context context) {
+        progressDialog = new ProgressDialog(context);
+        final ProgressDialog finalProgressDialog = progressDialog;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.setMessage("Registering Please Wait...");
-                progressDialog.show();
-
+                finalProgressDialog.setTitle("Loading...");
+                Activity.recreate();
             }
         });
+        finalProgressDialog.dismiss();
     }
 }

@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class GetJsonHttp {
     private static Context context;
@@ -57,17 +58,14 @@ public class GetJsonHttp {
                 Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
                 viewJsonHttp = gson.toJson(jsonElement);
 
-//            File file = new File("config.json");
-//            PrintWriter printWriter = new PrintWriter(new FileWriter(file));
-//            printWriter.print(jsonStr);
-//            printWriter.flush();
-//            printWriter.close();
 
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("myData.json", context.MODE_PRIVATE));
-                outputStreamWriter.write(viewJsonHttp);
-                outputStreamWriter.close();
-
-                // Print ETag
+                try {
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("myData.json", context.MODE_PRIVATE));
+                    outputStreamWriter.write(viewJsonHttp);
+                    outputStreamWriter.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
             } else {
@@ -107,6 +105,41 @@ public class GetJsonHttp {
         }
 
         return etag;
+    }
+
+    public void upLoad(String myJson) {
+
+        GetJson j = GetJson.getJsonConditions(context);
+
+        try {
+            System.out.println("Publishing template...");
+            HttpURLConnection httpURLConnection = getCommonConnection(BASE_URL + REMOTE_CONFIG_ENDPOINT);
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setRequestMethod("PUT");
+            httpURLConnection.setRequestProperty("If-Match", GetEtag());
+            httpURLConnection.setRequestProperty("Content-Encoding", "gzip");
+
+            String configStr = "{\n" +
+                    "  \"conditions\":" + j.getJsonCondition() + myJson + ",\n" +
+                    "  \"version\":" + j.getJsonVersion() +"}";
+            Log.e("yryryryr", configStr);
+            GZIPOutputStream gzipOutputStream = new GZIPOutputStream(httpURLConnection.getOutputStream());
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(gzipOutputStream);
+            outputStreamWriter.write(configStr);
+            outputStreamWriter.flush();
+            outputStreamWriter.close();
+
+            int code = httpURLConnection.getResponseCode();
+            if (code == 200) {
+                System.out.println("Template has been published.");
+            } else {
+                System.out.println(inputstreamToString(httpURLConnection.getErrorStream()));
+            }
+
+        } catch (Exception e) {
+
+        }
+
     }
 
     public interface callBack {

@@ -57,7 +57,7 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/boder_singer"
             android:orientation="horizontal"
-            android:padding="2dp">
+            android:padding="1dp">
 
             <TextView
                 android:id="@+id/key_defau"

@@ -8,10 +8,10 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
+        style="@style/HeaderBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp"
-        style="@style/HeaderBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -60,4 +60,5 @@
             android:text="Loading..."
             android:theme="@style/ButtonItemSave" />
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

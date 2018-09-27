@@ -1,5 +1,6 @@
 package com.viettelpost.remoteconfig.remotefirebase.app.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -20,7 +21,7 @@ import com.viettelpost.remoteconfig.remotefirebase.data.domain.MyColor;
 
 import java.util.ArrayList;
 
-public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.editViewHoder> {
+public class EditItemAdapter extends RecyclerView.Adapter<ChildViewHoder> {
 
     private ArrayList<ConditionaValues> dataValue;
     private Context context;
@@ -34,26 +35,22 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.editVi
 
     @NonNull
     @Override
-    public editViewHoder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ChildViewHoder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.custom_item_edit, viewGroup, false);
-        return new editViewHoder(view);
+        return new ChildViewHoder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull editViewHoder hoder, int position) {
-
+    public void onBindViewHolder(@NonNull ChildViewHoder hoder, int position) {
 
         if (dataValue.get(position).getKey().length() != 0) {
-
-
             for (int i = 0; i < dataConditions.size(); i++) {
                 String condition = dataConditions.get(i).getName();
                 if (dataValue.get(position).getKey().equals(condition)) {
                     for (int e = 0; e < hoder.myColors.size(); e++) {
                         String thisColor = hoder.myColors.get(e).getColorName();
                         if (dataConditions.get(i).getTagColor().equals(thisColor)) {
-                            hoder.editConditionValue.setText(dataValue.get(position).getValue());
                             hoder.editConditionValue.setTextColor(Color.parseColor(hoder.myColors.get(e).getColorCode()));
                             hoder.txtConditionKey.setTextColor(Color.parseColor(hoder.myColors.get(e).getColorCode()));
                             hoder.txtConditionKey.setText(dataValue.get(position).getKey());
@@ -61,9 +58,13 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.editVi
                     }
                 }
             }
-        } else {
-            hoder.editConditionValue.setText("Không có giá trị");
-            hoder.editConditionValue.setTextColor(Color.parseColor("#ff0000"));
+        }
+
+        if (dataValue.get(position).getValue().length() != 0) {
+            hoder.editConditionValue.setText(dataValue.get(position).getValue());
+        }
+        if (dataValue.get(position).getValue().length() == 0) {
+            hoder.editConditionValue.setText(null);
         }
 
     }
@@ -74,20 +75,5 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.editVi
             return dataValue.size();
         }
         return 0;
-    }
-
-    public class editViewHoder extends RecyclerView.ViewHolder {
-
-        public EditText editConditionValue;
-        public TextView txtConditionKey;
-        public ColorTag colorTag = ColorTag.getColorTag();
-        public ArrayList<MyColor> myColors;
-
-        public editViewHoder(@NonNull View itemView) {
-            super(itemView);
-            editConditionValue = itemView.findViewById(R.id.edit_condition);
-            txtConditionKey = itemView.findViewById(R.id.txt_condition);
-            myColors = colorTag.dataColor();
-        }
     }
 }

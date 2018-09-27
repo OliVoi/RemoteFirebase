@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
@@ -27,7 +28,8 @@ public class HomeActivity extends AppCompatActivity {
     private static Button btnLogOut, btnLoad;
     private static RecyclerView recyclerView;
     private Toolbar toolbar;
-    private ProgressDialog progressDialog;
+    private ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void viewre() {
 
         GetData data = GetData.CallGetData(this);
@@ -74,11 +77,10 @@ public class HomeActivity extends AppCompatActivity {
         btnLoad = findViewById(R.id.btn_load);
         recyclerView = findViewById(R.id.recycel);
         toolbar = findViewById(R.id.my_toolbar);
-        progressDialog = new ProgressDialog(this);
 
         EvenActivityMain fid = EvenActivityMain.getFind(this);
         fid.getLogOut(btnLogOut);
-        fid.OverLoad(btnLoad, progressDialog);
+        fid.OverLoad(btnLoad, dialog, this);
     }
 
 }

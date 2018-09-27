@@ -39,6 +39,6 @@
         android:background="@drawable/boder_button_edit"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Không có giá trị" />
+        android:hint="Không có giá trị..." />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.viettelpost.remoteconfig.remotefirebase.app.view;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgBack;
     private EditText mail, pass;
     private Button btnLogin, btnRegister;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         final EvenActivityMain evenActivityMain = EvenActivityMain.getFind(this);
         evenActivityMain.getAuth();
 
-        evenActivityMain.getLogin(btnLogin, mail, pass);
+        evenActivityMain.getLogin(btnLogin, mail, pass, progressDialog, this);
         evenActivityMain.singUp(mail, pass, btnRegister);
     }
 
