@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -93,8 +94,6 @@ public class EvenActivityMain {
     }
 
     public void getLogin(Button b, final EditText email, final EditText pass, ProgressDialog dialog, Context context) {
-        dialog = new ProgressDialog(context);
-
         final ProgressDialog finalDialog = dialog;
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,16 +129,15 @@ public class EvenActivityMain {
         finalDialog.dismiss();
     }
 
-    public void OverLoad(Button button, ProgressDialog progressDialog, final Context context) {
-        progressDialog = new ProgressDialog(context);
-        final ProgressDialog finalProgressDialog = progressDialog;
+    public void OverLoad(Button button, final Context context) {
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finalProgressDialog.setTitle("Loading...");
                 Activity.recreate();
             }
         });
-        finalProgressDialog.dismiss();
+
     }
+
 }

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         final EvenActivityMain evenActivityMain = EvenActivityMain.getFind(this);
         evenActivityMain.getAuth();
 
+        progressDialog = new ProgressDialog(this);
         evenActivityMain.getLogin(btnLogin, mail, pass, progressDialog, this);
         evenActivityMain.singUp(mail, pass, btnRegister);
     }
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void setBlur() {
         BlurImage.with(getApplicationContext()).load(R.drawable.cytyy).intensity(8).Async(true).into(imgBack);
     }
+
 
 
 }

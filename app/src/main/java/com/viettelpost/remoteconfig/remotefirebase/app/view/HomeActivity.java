@@ -1,6 +1,7 @@
 package com.viettelpost.remoteconfig.remotefirebase.app.view;
 
 import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -28,8 +30,6 @@ public class HomeActivity extends AppCompatActivity {
     private static Button btnLogOut, btnLoad;
     private static RecyclerView recyclerView;
     private Toolbar toolbar;
-    private ProgressDialog dialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         GetJsonHttp jsonHttp = GetJsonHttp.getJsonSpi(this);
+
+        Log.e("cocuocuocuoc", String.valueOf(0));
 
         findId();
         viewre();
@@ -62,14 +64,16 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void viewre() {
-
-        GetData data = GetData.CallGetData(this);
+        GetData data = GetData.CallGetData(HomeActivity.this);
 
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        DataAdapter adapter = new DataAdapter(data.showParamater(), this, data.showDataConditions());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
+        DataAdapter adapter = new DataAdapter(data.showParamater(), HomeActivity.this, data.showDataConditions());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+
+        Log.e("cocuocuocuoc222222", String.valueOf(recyclerView.getAdapter().getItemCount()));
+
     }
 
     private void findId() {
@@ -77,10 +81,12 @@ public class HomeActivity extends AppCompatActivity {
         btnLoad = findViewById(R.id.btn_load);
         recyclerView = findViewById(R.id.recycel);
         toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
 
         EvenActivityMain fid = EvenActivityMain.getFind(this);
         fid.getLogOut(btnLogOut);
-        fid.OverLoad(btnLoad, dialog, this);
+        fid.OverLoad(btnLoad, this);
     }
+
 
 }

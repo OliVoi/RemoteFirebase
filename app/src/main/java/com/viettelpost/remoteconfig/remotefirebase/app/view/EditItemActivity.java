@@ -42,6 +42,11 @@ public class EditItemActivity extends AppCompatActivity {
     ChildViewHoder chi;
     private GetJson getJson = GetJson.getJsonConditions(this);
     JSONObject jsonObject;
+    JSONObject j = new JSONObject();
+    JSONObject jDefau = null;
+    JSONObject jCondition = null;
+    JSONObject jChildCondition = null;
+    int e;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +81,6 @@ public class EditItemActivity extends AppCompatActivity {
                 getMyJson();
 
 
-//                GetJsonHttp g = GetJsonHttp.getJsonSpi(EditItemActivity.this);
-//                g.upLoad("");
-
-
             }
         });
     }
@@ -98,7 +99,7 @@ public class EditItemActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btn_save);
     }
 
-    public String getMyJson() {
+    public void getMyJson() {
         String mJson = "";
         try {
 
@@ -108,55 +109,67 @@ public class EditItemActivity extends AppCompatActivity {
 
                 String title = "";
                 title = iter.next();
-                Log.e("ititrititi", title);
 
-                if (editTitle.getText().toString().equals(title)) {
+                if (data.get(cusor).getTitle().equals(title)) {
+
+                    String vTitle = editTitle.getText().toString();
+                    String vDess = editDess.getText().toString();
+                    String vDefau = editDefau.getText().toString();
 
                     JSONObject jsonObject2 = jsonObject.getJSONObject(title);
-                    Log.e("33333333333", jsonObject2.toString());
-
                     JSONObject jsonObject3 = new JSONObject(jsonObject2.toString());
+                    JSONObject jsonObject4 = jsonObject3.getJSONObject("defaultValue");
+                    JSONObject jsonObject5 = null;
 
-                    if (jsonObject3.has("description") && jsonObject3.getString("description") != editDess.toString()) {
-                        jsonObject3.put("description", editDess);
-                        Log.e("33333333333", jsonObject3.toString());
-                    }
 
-                    if (jsonObject3.has("defaultValue")) {
-                        JSONObject jsonObject4 = jsonObject3.getJSONObject("defaultValue");
-                        jsonObject4.put("value", editDefau);
-                        Log.e("4444444444", jsonObject4.toString());
-                    }
+                    String o = myObjectJson(jsonObject2, jsonObject3, jsonObject4, jsonObject5);
 
-                    if (jsonObject3.has("conditionalValues")) {
+                    GetJsonHttp g = GetJsonHttp.getJsonSpi(EditItemActivity.this);
+                    g.upLoad(o);
 
-                        JSONObject jsonObject5 = new JSONObject(jsonObject3.getJSONObject("conditionalValues").toString());
-                        Log.e("iiiiiiooioioio", jsonObject5.toString());
-
-                        for (int i = 0; i < adapter.getItemCount(); i++) {
-                            chi = (ChildViewHoder)
-                                    recyclerView.findViewHolderForAdapterPosition(i);
-                            String value = chi.editConditionValue.toString();
-                            String key = chi.txtConditionKey.toString();
-                            JSONObject jsonObject6 = jsonObject5.getJSONObject(key);
-                           // jsonObject6.put("value", value);
-
-                            Log.e("666666666", jsonObject6.toString());
-                        }
-                    }
-
-                    Log.e("tptptptp", jsonObject3.toString());
-                    jsonObject.remove(title);
                 }
             }
         } catch (Exception e) {
         }
-        return mJson;
     }
 
 
-    public void upLoad() {
+    private String myObjectJson(JSONObject jsonObject2, JSONObject jsonObject3, JSONObject jsonObject4, JSONObject jsonObject5) {
+        String myAdd = "";
+        try {
 
+            if (jsonObject3.has("description")) {
+                j.put("description", editDess.getText().toString());
+            }
+
+
+            jDefau = new JSONObject();
+            jDefau.put("value", editDefau.getText().toString());
+
+
+            jCondition = new JSONObject();
+            if (jsonObject3.has("conditionalValues")) {
+                jsonObject5 = new JSONObject(jsonObject3.getJSONObject("conditionalValues").toString());
+                for (int i = 0; i < adapter.getItemCount(); i++) {
+                    jChildCondition = new JSONObject();
+                    chi = (ChildViewHoder)
+                            recyclerView.findViewHolderForAdapterPosition(i);
+                    String value = chi.editConditionValue.getText().toString();
+                    String key = chi.txtConditionKey.getText().toString();
+                    JSONObject jsonObject6 = jsonObject5.getJSONObject(key);
+                    jChildCondition.put("value", value);
+                    jCondition.put(key, jChildCondition);
+                }
+                j.put("conditionalValues", jCondition);
+            }
+            j.put("defaultValue", jDefau);
+
+            jsonObject.remove(data.get(cusor).getTitle());
+            jsonObject.put(editTitle.getText().toString(), j);
+
+            myAdd = "\"parameters\":" + jsonObject.toString();
+        } catch (Exception e) {
+        }
+        return myAdd;
     }
-
 }

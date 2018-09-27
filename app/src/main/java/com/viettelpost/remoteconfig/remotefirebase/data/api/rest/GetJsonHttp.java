@@ -120,7 +120,7 @@ public class GetJsonHttp {
             httpURLConnection.setRequestProperty("Content-Encoding", "gzip");
 
             String configStr = "{\n" +
-                    "  \"conditions\":" + j.getJsonCondition() + myJson + ",\n" +
+                    "  \"conditions\":" + j.getJsonCondition() +","+ myJson + ",\n" +
                     "  \"version\":" + j.getJsonVersion() +"}";
             Log.e("yryryryr", configStr);
             GZIPOutputStream gzipOutputStream = new GZIPOutputStream(httpURLConnection.getOutputStream());
